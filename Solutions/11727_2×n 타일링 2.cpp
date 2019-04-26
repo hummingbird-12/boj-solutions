@@ -31,7 +31,7 @@ using namespace std;
 int dp[1002];
 
 int main() {
-    int n, calc;
+    int n;
 
     scanf("%d", &n);
 
