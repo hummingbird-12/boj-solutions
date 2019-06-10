@@ -18,6 +18,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{
 		Solutions\16434_드래곤 앤 던전.cpp = Solutions\16434_드래곤 앤 던전.cpp
 		Solutions\1806_부분합.cpp = Solutions\1806_부분합.cpp
 		Solutions\1931_회의실배정.cpp = Solutions\1931_회의실배정.cpp
+		Solutions\2003_수들의 합 2.cpp = Solutions\2003_수들의 합 2.cpp
 		Solutions\2110_공유기 설치.cpp = Solutions\2110_공유기 설치.cpp
 		Solutions\2805_나무자르기.cpp = Solutions\2805_나무자르기.cpp
 		Solutions\9465_스티커.cpp = Solutions\9465_스티커.cpp
