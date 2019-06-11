@@ -12,6 +12,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{B951149E-3026-40BD-8EF0-32516B9C93AB}"
 	ProjectSection(SolutionItems) = preProject
+		Solutions\11724_연결 요소의 개수 (DFS).cpp = Solutions\11724_연결 요소의 개수 (DFS).cpp
+		Solutions\11724_연결 요소의 개수 (Union-Find).cpp = Solutions\11724_연결 요소의 개수 (Union-Find).cpp
 		Solutions\11726_2×n 타일링.cpp = Solutions\11726_2×n 타일링.cpp
 		Solutions\11727_2×n 타일링 2.cpp = Solutions\11727_2×n 타일링 2.cpp
 		Solutions\1181_단어 정렬.cpp = Solutions\1181_단어 정렬.cpp
