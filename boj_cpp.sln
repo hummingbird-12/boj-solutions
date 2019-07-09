@@ -27,6 +27,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solutions", "Solutions", "{
 		Solutions\2805_나무자르기.cpp = Solutions\2805_나무자르기.cpp
 		Solutions\7576_토마토.cpp = Solutions\7576_토마토.cpp
 		Solutions\9095_1, 2, 3 더하기.cpp = Solutions\9095_1, 2, 3 더하기.cpp
+		Solutions\9251_LCS.cpp = Solutions\9251_LCS.cpp
 		Solutions\9465_스티커.cpp = Solutions\9465_스티커.cpp
 	EndProjectSection
 EndProject
