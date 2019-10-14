@@ -26,7 +26,7 @@ using namespace std;
 vector < int > house;
 
 bool placedAll(int d, int c) {
-    int prev = 1;
+    int prev = house.front();
     c--;
 
     for (int i : house) {
@@ -62,18 +62,21 @@ int binarySearch(int l, int r, int c) {
 }
 
 int main() {
+    cin.tie(nullptr);
+    ios_base::sync_with_stdio(false);
+
     int n, c, h;
     int opt;
 
-    scanf("%d%d", &n, &c);
+    cin >> n >> c;
     for (int i = 0; i < n; i++) {
-        scanf("%d", &h);
+        cin >> h;
         house.push_back(h);
     }
     sort(house.begin(), house.end());
     opt = (house.back() - house.front()) / (c - 1);
 
-    printf("%d\n", binarySearch(1, opt, c));
+    cout << binarySearch(1, opt, c) << '\n';
 
     return 0;
 }
