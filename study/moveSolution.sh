@@ -35,3 +35,6 @@ tr -d '\r' < "$DESTINATION_PATH.CRLF" > "$DESTINATION_PATH"
 rm "$DESTINATION_PATH.CRLF"
 
 echo "$DESTINATION_PATH has been created with LF line ending."
+
+echo "Verifying the files are identical..."
+diff -s --strip-trailing-cr "./$SOURCE_FILE_NAME" "$DESTINATION_PATH"
