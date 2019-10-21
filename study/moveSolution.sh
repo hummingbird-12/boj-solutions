@@ -57,5 +57,5 @@ else
     git add "$DESTINATION_PATH"
     git commit -m "problem $1" 
     echo "Pushing to GitHub..."
-    git push -u origin2 master
+    git push
 fi
