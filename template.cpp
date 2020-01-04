@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cctype>
 #include <climits>
 #include <cmath>
@@ -5,7 +6,6 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <cassert>
 
 #include <algorithm>
 #include <array>
