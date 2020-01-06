@@ -7,6 +7,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "study", "study\study.vcxpro
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{C8EE527C-91AD-4C13-8089-FE846138E626}"
 	ProjectSection(SolutionItems) = preProject
+		.editorconfig = .editorconfig
 		template.cpp = template.cpp
 	EndProjectSection
 EndProject
