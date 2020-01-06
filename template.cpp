@@ -11,6 +11,7 @@
 #include <array>
 #include <bitset>
 #include <deque>
+#include <functional>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
