@@ -29,35 +29,30 @@
 
 using namespace std;
 
-int days;
-vector < short > duration;
-vector < short > reward;
-
-int backtracking(int day = 1, int sum = 0) {
-    int ans = sum + (day + duration[day - 1] - 1 <= days ? reward[day - 1] : 0);
-    for (int next = day + 1; next <= days; next++) {
-        if (next >= day + duration[day - 1]) {
-            ans = max(ans, backtracking(next, sum + reward[day - 1]));
-        }
-        ans = max(ans, backtracking(next, sum));
-    }
-
-    return ans;
-}
-
 int main() {
     cin.tie(nullptr);
     ios_base::sync_with_stdio(false);
 
+    int days;
     cin >> days;
-    duration.resize(days);
-    reward.resize(days);
 
-    for (int i = 0; i < days; i++) {
+    vector < short > duration(days + 1);
+    vector < short > reward(days + 1);
+
+    for (int i = 1; i <= days; i++) {
         cin >> duration[i] >> reward[i];
     }
 
-    cout << backtracking() << '\n';
+    vector < short > dp(days + 2);
+    for (int i = 1; i <= days; i++) {
+        // Able to complete
+        if (i + duration[i] - 1 <= days) {
+            dp[i + duration[i]] = max((int)dp[i + duration[i]], dp[i] + reward[i]);
+        }
+        // Skip
+        dp[i + 1] = max(dp[i + 1], dp[i]);
+    }
+    cout << dp[days + 1] << '\n';
 
     return 0;
 }
