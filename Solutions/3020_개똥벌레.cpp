@@ -1,3 +1,4 @@
+#include <cassert>
 #include <cctype>
 #include <climits>
 #include <cmath>
@@ -5,12 +6,12 @@
 #include <cstdlib>
 #include <cstring>
 #include <ctime>
-#include <cassert>
 
 #include <algorithm>
 #include <array>
 #include <bitset>
 #include <deque>
+#include <functional>
 #include <iomanip>
 #include <iostream>
 #include <iterator>
@@ -23,10 +24,8 @@
 #include <sstream>
 #include <stack>
 #include <string>
+#include <unordered_map>
 #include <vector>
-
-constexpr int BOTTOM = 0;
-constexpr int TOP = 1;
 
 using namespace std;
 
@@ -34,39 +33,39 @@ int main() {
     cin.tie(nullptr);
     ios_base::sync_with_stdio(false);
 
-    vector < int > count[2]; // count obstacles in top and bottom per height
-    vector < int > obstacles;
-    int n, h, obs;
-    int bottom, top;
-    int current = BOTTOM; // 0 is bottom, 1 is top
-
+    int n, h;
     cin >> n >> h;
-    obstacles.resize(h + 1, INT_MAX);
-    count[0].resize(h + 1);
-    count[1].resize(h + 1);
 
-    for (int i = 0; i < n; i++) {
-        cin >> obs;
-        count[current][obs]++;
-        current = 1 - current;
+    vector < int > upwards_cnt(h + 1);
+    vector < int > downwards_cnt(h + 1);
+
+    int height;
+    // While receving input, count per height
+    for (int i = 0; i < n / 2; i++) {
+        cin >> height;
+        upwards_cnt[height]++;
+        cin >> height;
+        downwards_cnt[height]++;
     }
 
-    bottom = n / 2;
-    top = 0;
+    int upwards_obstacles = n / 2; // All upwards obstacles initially block height=1
+    int downwards_obstacles = 0; // No downwards obstacle initially block height=1
+    vector < int > obstacles(h + 1);
+    int mn = INT_MAX;
     for (int i = 1; i <= h; i++) {
-        obstacles[i] = bottom + top;
-        bottom -= count[BOTTOM][i];
-        top += count[TOP][h - i];
+        mn = min(mn, (obstacles[i] = upwards_obstacles + downwards_obstacles));
+        upwards_obstacles -= upwards_cnt[i]; // As height increases, upwards obstacles reduce
+        downwards_obstacles += downwards_cnt[h - i]; // As height increases, downwards obstacles increase
     }
 
-    const int minimum = *min_element(obstacles.begin(), obstacles.end());
-    int minCount = 0;
-    for (auto i : obstacles) {
-        if (i == minimum) {
-            minCount++;
+    int cnt = 0;
+    for (int i = 1; i <= h; i++) {
+        if (obstacles[i] == mn) {
+            cnt++;
         }
     }
-    cout << minimum << ' ' << minCount << '\n';
+
+    cout << mn << ' ' << cnt << '\n';
 
     return 0;
 }
