@@ -31,83 +31,56 @@ using namespace std;
 
 vector < vector < int > > graph;
 vector < int > depth;
-vector < bool > visited;
-vector < vector < int > > parent_2k; // List of 2^k-th parents of each node
 
-void dfs(const int cur, vector < int >& path) {
-    // Get 2^k-th parents
-    for (int j = 1; j <= path.size() - 1; j *= 2) {
-        parent_2k[cur].push_back(path[path.size() - j - 1]);
-    }
+constexpr int MAX_EXP = 18; // 2^17 > 100'000
+int parent_2k[100'001][MAX_EXP]; // List of 2^k-th parents of each node
 
+void dfs(const int cur, const int par) {
     for (const int& next : graph[cur]) {
-        if (!visited[next]) {
-            visited[next] = true;
+        if (next != par) {
             depth[next] = depth[cur] + 1;
 
-            path.push_back(next);
-            dfs(next, path);
-            path.pop_back();
+            // Fill 2^-th parents list
+            parent_2k[next][0] = cur;
+            for (int i = 1; i < MAX_EXP; i++) {
+                parent_2k[next][i] = parent_2k[parent_2k[next][i - 1]][i - 1];
+            }
+
+            dfs(next, cur);
         }
     }
 }
 
-int query(int a, int b) {
+int lca_query(int a, int b) {
     if (a == 1 || b == 1) {
         return 1;
     }
 
-    // Equalize depth
-    while (depth[a] != depth[b]) {
-        const int diff = log2(abs(depth[a] - depth[b]));
-        int& deeper = (depth[a] > depth[b] ? a : b);
-        deeper = parent_2k[deeper][diff];
+    // Make node `a` the deepest node
+    if (depth[a] < depth[b]) {
+        swap(a, b);
     }
 
-    int i;
-    // Bring both nodes towards root until both's 2k-th parent is the same
-    while (true) {
-        for (i = 0; i < parent_2k[a].size(); i++) {
-            if (parent_2k[a][i] == parent_2k[b][i]) {
-                break;
-            }
-        }
-
-        // 2^0-th parent is the same
-        if (i == 0) {
-            break;
-        }
-
-        // 2^i-th parent is the same
-        if (i < parent_2k[a].size()) {
-            a = parent_2k[a][i - 1];
-            b = parent_2k[b][i - 1];
-            break;
-        }
-
-        // No 2^k-th parent is the same
-        a = parent_2k[a].back();
-        b = parent_2k[b].back();
-    }
-
-    // Bring both nodes towards root until LCA is found
-    while (a != b) {
-        for (const int& next : graph[a]) {
-            if (depth[next] < depth[a]) {
-                a = next;
-                break;
-            }
-        }
-
-        for (const int& next : graph[b]) {
-            if (depth[next] < depth[b]) {
-                b = next;
-                break;
-            }
+    // Equalize node `a`'s depth to node `b`
+    for (int i = MAX_EXP - 1; i >= 0; i--) {
+        if ((1 << i) <= depth[a] - depth[b]) {
+            a = parent_2k[a][i];
         }
     }
 
-    return a;
+    if (a == b) {
+        return a;
+    }
+
+    // Bring both nodes towards root until direct parent is same
+    for (int i = MAX_EXP - 1; i >= 0; i--) {
+        if (parent_2k[a][i] != parent_2k[b][i]) {
+            a = parent_2k[a][i];
+            b = parent_2k[b][i];
+        }
+    }
+
+    return parent_2k[a][0];
 }
 
 int main() {
@@ -119,8 +92,6 @@ int main() {
 
     graph.resize(n + 1);
     depth.resize(n + 1);
-    visited.resize(n + 1);
-    parent_2k.resize(n + 1);
 
     int u, v;
     while (--n) {
@@ -129,16 +100,12 @@ int main() {
         graph[v].push_back(u);
     }
 
-    vector < int > path;
-    visited[1] = true;
-    path.push_back(1);
-
-    dfs(1, path);
+    dfs(1, 0);
 
     cin >> n;
     while (n--) {
         cin >> u >> v;
-        cout << query(u, v) << '\n';
+        cout << lca_query(u, v) << '\n';
     }
 
     return 0;
